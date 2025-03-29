@@ -46,14 +46,18 @@ export default function OutputArea({ hints }: { hints: string[] }) {
     <div 
       className="fixed bottom-4 right-4 transition-all duration-300 ease-in-out"
       style={{ 
-        width: isMinimized ? "40px" : "500px",
+        width: isMinimized ? "40px" : "min(500px, 90vw)",
+        maxWidth: "90vw"
       }}
     >
       <div 
         className={`relative rounded-md bg-[#2F2F2F] shadow-sm transition-all duration-300 ease-in-out ${
           isMinimized ? "h-10 w-10 flex items-center justify-center" : ""
         }`} 
-        style={{ height: isMinimized ? "40px" : `${height}px` }} 
+        style={{ 
+          height: isMinimized ? "40px" : `${Math.min(height, window.innerHeight * 0.8)}px`,
+          maxHeight: "80vh"
+        }} 
       >
         {isMinimized ? (
           <Button 
