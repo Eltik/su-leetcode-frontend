@@ -14,7 +14,7 @@ interface LeaderboardProps {
 const Leaderboard = ({ name, leaderboardData }: LeaderboardProps) => {
     return (
         <div className="text-white">
-            <h2 className="text-xl font-bold mb-4">Leaderboard</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Leaderboard</h2>
             <div className="space-y-2">
                 {leaderboardData.map((entry) => (
                     <div

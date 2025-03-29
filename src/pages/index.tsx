@@ -32,6 +32,7 @@ const HomePage = ({ problemData, leaderboardData: initialLeaderboardData }: HTTP
     const [language, setLanguage] = useState('javascript');
     const [isNameEntered, setIsNameEntered] = useState(false);
     const [leaderboardData, setLeaderboardData] = useState(initialLeaderboardData);
+    const [isLeaderboardVisible, setIsLeaderboardVisible] = useState(true);
 
     const updateLeaderboard = async (playerName: string) => {
         try {
@@ -176,17 +177,36 @@ const HomePage = ({ problemData, leaderboardData: initialLeaderboardData }: HTTP
                 <meta name="description" content="App for practicing Leetcode problems" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="flex min-h-screen bg-[#3C3C3C]">
-                {/* Fixed Leaderboard */}
-                <div className="fixed left-0 top-0 h-screen w-80 p-6 bg-[#2F2F2F] border-r border-[#4C4C4C]">
+            <main className={`flex min-h-screen bg-[#3C3C3C] ${isLeaderboardVisible ? '' : 'ml-0'}`}>
+                {/* New Hamburger Toggle Button */}
+                <button
+                    onClick={() => setIsLeaderboardVisible(!isLeaderboardVisible)}
+                    className="fixed top-4 left-4 z-50 w-10 h-10 flex flex-col justify-center items-center 
+                             bg-[#3C3C3C] rounded-md hover:bg-gray-600 transition-colors focus:outline-none"
+                    aria-label="Toggle Leaderboard"
+                >
+                    <span className={`block w-6 h-0.5 bg-white rounded-sm transition-all duration-300 
+                        ${isLeaderboardVisible ? 'rotate-45 translate-y-1.5' : ''}`} />
+                    <span className={`block w-6 h-0.5 bg-white rounded-sm transition-all duration-300 mt-1.5
+                        ${isLeaderboardVisible ? 'opacity-0' : ''}`} />
+                    <span className={`block w-6 h-0.5 bg-white rounded-sm transition-all duration-300 mt-1.5
+                        ${isLeaderboardVisible ? '-rotate-45 -translate-y-1.5' : ''}`} />
+                </button>
+
+                {/* Leaderboard with transition */}
+                <div className={`fixed left-0 top-0 h-screen w-80 p-6 bg-[#2F2F2F] border-r border-[#4C4C4C] transition-transform duration-300 ${
+                    isLeaderboardVisible ? 'translate-x-0' : '-translate-x-full'
+                }`}>
                     <Leaderboard 
                         name={name} 
                         leaderboardData={formatLeaderboardData(leaderboardData)} 
                     />
                 </div>
                 
-                {/* Main Content Area */}
-                <div className="flex-1 ml-80 p-8 relative">
+                {/* Main Content Area with dynamic margin */}
+                <div className={`flex-1 p-8 relative transition-all duration-300 ${
+                    isLeaderboardVisible ? 'ml-80' : 'ml-0'
+                }`}>
                     <div className="text-center mb-8">
                         <h1 className="text-4xl text-white font-bold">
                             Welcome {name}! 🚀
