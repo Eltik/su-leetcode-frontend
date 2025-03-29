@@ -181,15 +181,15 @@ const HomePage = ({ problemData, leaderboardData: initialLeaderboardData }: HTTP
                 {/* New Hamburger Toggle Button */}
                 <button
                     onClick={() => setIsLeaderboardVisible(!isLeaderboardVisible)}
-                    className="fixed top-4 left-4 z-50 w-10 h-10 flex flex-col justify-center items-center 
+                    className="fixed top-4 left-4 z-50 w-[30px] h-[30px] flex flex-col justify-center items-center 
                              bg-[#3C3C3C] rounded-md hover:bg-gray-600 transition-colors focus:outline-none"
                     aria-label="Toggle Leaderboard"
                 >
-                    <span className={`block w-6 h-0.5 bg-white rounded-sm transition-all duration-300 
+                    <span className={`block w-5 h-0.5 bg-white rounded-sm transition-all duration-300 
                         ${isLeaderboardVisible ? 'rotate-45 translate-y-1.5' : ''}`} />
-                    <span className={`block w-6 h-0.5 bg-white rounded-sm transition-all duration-300 mt-1.5
+                    <span className={`block w-5 h-0.5 bg-white rounded-sm transition-all duration-300 mt-1
                         ${isLeaderboardVisible ? 'opacity-0' : ''}`} />
-                    <span className={`block w-6 h-0.5 bg-white rounded-sm transition-all duration-300 mt-1.5
+                    <span className={`block w-5 h-0.5 bg-white rounded-sm transition-all duration-300 mt-1
                         ${isLeaderboardVisible ? '-rotate-45 -translate-y-1.5' : ''}`} />
                 </button>
 
