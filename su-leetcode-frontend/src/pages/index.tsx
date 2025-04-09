@@ -25,6 +25,20 @@ export default function Home() {
         hints: ["Try using a hash map to store the complement of each number", "For each number, check if its complement exists in the hash map", "If found, return the current index and the complement's index"],
     };
 
+    // Get difficulty badge styles based on theme
+    const getDifficultyBadgeStyle = (difficulty: string) => {
+        switch (difficulty) {
+            case "Easy":
+                return "bg-success/20 text-success";
+            case "Medium":
+                return "bg-warning/20 text-warning";
+            case "Hard":
+                return "bg-destructive/20 text-destructive";
+            default:
+                return "bg-muted text-muted-foreground";
+        }
+    };
+
     return (
         <>
             <Head>
@@ -41,10 +55,10 @@ export default function Home() {
                             <AvatarFallback>{userName.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
-                            <h1 className="text-3xl font-bold">Welcome, {userName}</h1>
+                            <h1 className="text-3xl font-bold text-foreground">Welcome, {userName}</h1>
                             <div className="flex items-center gap-2">
-                                <Code className="h-4 w-4 text-blue-500" />
-                                <span className="text-sm text-gray-500">Practicing in: {selectedLanguage}</span>
+                                <Code className="h-4 w-4 text-primary" />
+                                <span className="text-sm text-muted-foreground">Practicing in: {selectedLanguage}</span>
                             </div>
                         </div>
                     </div>
@@ -67,39 +81,39 @@ export default function Home() {
                     {/* Problem Section */}
                     <div className="bg-card rounded-lg border p-6 shadow-sm">
                         <div className="mb-4 flex items-center justify-between">
-                            <h2 className="text-2xl font-bold">{problem.title}</h2>
-                            <span className={`rounded-full px-3 py-1 text-sm font-medium ${problem.difficulty === "Easy" ? "bg-green-100 text-green-800" : problem.difficulty === "Medium" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}>{problem.difficulty}</span>
+                            <h2 className="text-2xl font-bold text-foreground">{problem.title}</h2>
+                            <span className={`rounded-full px-3 py-1 text-sm font-medium ${getDifficultyBadgeStyle(problem.difficulty)}`}>{problem.difficulty}</span>
                         </div>
 
                         <div className="mb-6">
-                            <h3 className="mb-2 text-lg font-semibold">Description</h3>
-                            <p className="text-gray-700">{problem.description}</p>
+                            <h3 className="mb-2 text-lg font-semibold text-foreground">Description</h3>
+                            <p className="text-muted-foreground">{problem.description}</p>
                         </div>
 
                         <div className="mb-6">
-                            <h3 className="mb-2 text-lg font-semibold">Parameters</h3>
-                            <div className="rounded-md bg-gray-50 p-4">
+                            <h3 className="mb-2 text-lg font-semibold text-foreground">Parameters</h3>
+                            <div className="rounded-md bg-muted p-4">
                                 {problem.parameters.map((param, index) => (
                                     <div key={index} className="mb-2">
-                                        <code className="font-mono text-sm text-blue-600">
+                                        <code className="font-mono text-sm text-primary">
                                             {param.name}: {param.type}
                                         </code>
-                                        <p className="text-sm text-gray-600">{param.description}</p>
+                                        <p className="text-sm text-muted-foreground">{param.description}</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         <Collapsible open={showHints} onOpenChange={setShowHints}>
-                            <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md bg-amber-50 px-4 py-2 text-amber-800 hover:bg-amber-100">
+                        <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md bg-amber-50 px-4 py-2 text-amber-800 hover:bg-amber-100">
                                 <div className="flex items-center gap-2">
                                     <Lightbulb className="h-5 w-5" />
                                     <span>Hints</span>
                                 </div>
                                 {showHints ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                             </CollapsibleTrigger>
-                            <CollapsibleContent className="mt-2 rounded-md bg-amber-50 p-4">
-                                <ul className="list-inside list-decimal space-y-2 text-amber-800">
+                            <CollapsibleContent className="mt-2 rounded-md bg-warning/10 p-4">
+                                <ul className="list-inside list-decimal space-y-2 text-warning-foreground">
                                     {problem.hints.map((hint, index) => (
                                         <li key={index}>{hint}</li>
                                     ))}
@@ -110,7 +124,7 @@ export default function Home() {
 
                     {/* Solution Section */}
                     <div className="bg-card rounded-lg border p-6 shadow-sm">
-                        <h2 className="mb-4 text-2xl font-bold">Your Solution</h2>
+                        <h2 className="mb-4 text-2xl font-bold text-foreground">Your Solution</h2>
                         <div className="mb-4">
                             <Label className="mb-1" htmlFor="language">
                                 Language
@@ -132,7 +146,13 @@ export default function Home() {
 
                         <div className="mb-4">
                             <Label htmlFor="solution">Code</Label>
-                            <textarea id="solution" className="min-h-[300px] w-full rounded-md border border-gray-300 p-4 font-mono text-sm" placeholder={`// Write your ${selectedLanguage} solution here`} value={solution} onChange={(e) => setSolution(e.target.value)} />
+                            <textarea 
+                                id="solution" 
+                                className="min-h-[300px] w-full rounded-md border border-input bg-background p-4 font-mono text-sm text-foreground" 
+                                placeholder={`// Write your ${selectedLanguage} solution here`} 
+                                value={solution} 
+                                onChange={(e) => setSolution(e.target.value)} 
+                            />
                         </div>
 
                         <div className="flex justify-end gap-2">
